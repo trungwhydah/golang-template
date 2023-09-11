@@ -10,7 +10,6 @@ type UserAuthenticator struct {
 
 func NewUserAuthenticator(
 	decoder *AuthenticatorDecoder,
-
 ) AuthenticatorInterface {
 	return &UserAuthenticator{decoder: decoder}
 }

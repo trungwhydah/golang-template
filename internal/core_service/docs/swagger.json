@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "Description for what is this security definition being used",
-        "title": "PTNK Admission  Backend API",
+        "description": "This is a sample server.",
+        "title": "Example Admission  Backend API",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "API Support",
@@ -19,6 +19,7 @@
     "paths": {},
     "securityDefinitions": {
         "ApiKeyAuth": {
+            "description": "JWT Token",
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"

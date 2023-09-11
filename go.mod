@@ -5,7 +5,6 @@ go 1.20
 require (
 	cloud.google.com/go/storage v1.33.0
 	firebase.google.com/go v3.13.0+incompatible
-	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/ghodss/yaml v1.0.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/google/uuid v1.3.1

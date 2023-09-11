@@ -4,16 +4,17 @@ info:
     email: support@swagger.io
     name: API Support
     url: http://www.swagger.io/support
-  description: Description for what is this security definition being used
+  description: This is a sample server.
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
-  title: PTNK Admission  Backend API
+  title: Example Admission  Backend API
   version: "1.0"
 paths: {}
 securityDefinitions:
   ApiKeyAuth:
+    description: JWT Token
     in: header
     name: Authorization
     type: apiKey

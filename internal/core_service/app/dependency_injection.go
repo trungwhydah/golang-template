@@ -3,6 +3,8 @@ package app
 import (
 	cmconfig "github.com/golang/be/config/common"
 	config "github.com/golang/be/config/core_service"
+	cmdomain "github.com/golang/be/internal/common/domain"
+	cmrepo "github.com/golang/be/internal/common/repo"
 	"github.com/golang/be/internal/core_service/api/restful"
 	"github.com/golang/be/internal/core_service/api/restful/security"
 	v1 "github.com/golang/be/internal/core_service/api/restful/v1"
@@ -40,6 +42,12 @@ var InternalOptions = fx.Options(
 
 	// Repo
 	repo.Module,
+
+	// Common Repo
+	cmrepo.Module,
+
+	// Common Domain
+	cmdomain.Module,
 )
 
 var PackageOptions = fx.Options(

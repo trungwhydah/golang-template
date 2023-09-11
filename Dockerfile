@@ -20,6 +20,7 @@ WORKDIR /app
 # Stage 3: Runtime ENV
 FROM golang:1.20.7-alpine3.18 AS runtime_env
 WORKDIR /application
+COPY --from=builder /app/service-account-file.json ./service-account-file.json
 COPY --from=builder /app/config ./config
 COPY --from=builder /app/translation.en.yaml .
 COPY --from=builder /app/translation.vi.yaml .
