@@ -1,0 +1,12 @@
+app:
+  name: "core-service-dev"
+  env: "dev"
+  version: "1.0.0"
+
+http:
+  port: 8080
+
+logger:
+  # zap config level
+  level: "info"
+  prod: false
