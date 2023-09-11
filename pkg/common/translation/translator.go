@@ -1,8 +1,8 @@
 package translation
 
 import (
+	"github.com/golang/be/pkg/common/logger"
 	structtraversal2 "github.com/golang/be/pkg/core_service/structtraversal"
-	"github.com/golang/be/pkg/logger"
 	"github.com/jinzhu/copier"
 	"github.com/mitchellh/mapstructure"
 )

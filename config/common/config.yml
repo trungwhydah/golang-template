@@ -1,5 +1,5 @@
 app:
-  name: "core-service"
+  name: "common"
   # values: localhost, staging, production
   env: "localhost"
   version: "0.0.1"
@@ -17,4 +17,4 @@ mongo:
   conn_uri: "mongodb://root:password@localhost:27017"
 
 firebase_storage:
-  bucket_name: "contents-dev.raramuri.io"
+  bucket_name: "contents-dev.phygital"

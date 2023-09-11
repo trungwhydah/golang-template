@@ -3,7 +3,7 @@ package firebase
 import (
 	"context"
 
-	"github.com/golang/be/pkg/logger"
+	"github.com/golang/be/pkg/common/logger"
 
 	firebase "firebase.google.com/go"
 	"firebase.google.com/go/auth"

@@ -6,8 +6,8 @@ import (
 	"text/template"
 
 	"github.com/gin-gonic/gin"
-	"github.com/golang/be/pkg/logger"
-	"github.com/golang/be/pkg/msgtranslate"
+	"github.com/golang/be/pkg/common/logger"
+	"github.com/golang/be/pkg/common/msgtranslate"
 )
 
 type Response struct {

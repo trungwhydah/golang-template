@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/golang/be/pkg/httpresp"
+	"github.com/golang/be/pkg/common/httpresp"
 
 	"firebase.google.com/go/auth"
 	"github.com/gin-gonic/gin"

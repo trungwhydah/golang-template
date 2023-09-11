@@ -10,3 +10,6 @@ logger:
   # zap config level
   level: "info"
   prod: false
+
+firebase_storage:
+  bucket_name: "contents-dev.phygital"

@@ -6,7 +6,7 @@ import (
 
 	config "github.com/golang/be/config/common"
 	cmentity "github.com/golang/be/internal/common/entity"
-	"github.com/golang/be/pkg/logger"
+	"github.com/golang/be/pkg/common/logger"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/mgocompat"
 	"go.mongodb.org/mongo-driver/bson/primitive"

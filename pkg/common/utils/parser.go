@@ -3,7 +3,7 @@ package utils
 import (
 	"reflect"
 
-	"github.com/golang/be/pkg/logger"
+	"github.com/golang/be/pkg/common/logger"
 )
 
 // ToSlice returns slices of specific of struct from list interface.

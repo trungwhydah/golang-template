@@ -3,7 +3,7 @@ package msgtranslate
 import (
 	"fmt"
 
-	"github.com/golang/be/pkg/logger"
+	"github.com/golang/be/pkg/common/logger"
 	"golang.org/x/text/language"
 
 	"github.com/ghodss/yaml"

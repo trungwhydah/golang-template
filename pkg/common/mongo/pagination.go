@@ -5,8 +5,8 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/golang/be/pkg/logger"
-	paginationpkg "github.com/golang/be/pkg/pagination"
+	"github.com/golang/be/pkg/common/logger"
+	paginationpkg "github.com/golang/be/pkg/common/pagination"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )

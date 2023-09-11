@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/golang/be/pkg/logger"
+	"github.com/golang/be/pkg/common/logger"
 )
 
 const (
