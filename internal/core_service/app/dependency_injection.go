@@ -64,5 +64,5 @@ var PackageOptions = fx.Options(
 	fx.Provide(logger.Init),
 
 	// Msg translate
-	fx.Provide(msgtranslate.Init),
+	fx.Invoke(msgtranslate.Init),
 )
