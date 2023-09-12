@@ -24,7 +24,9 @@ type Translator struct {
 	translators map[string]*i18n.Localizer
 }
 
-func (t *Translator) Translate(translationKey string, lang *string, data map[string]any) string {
+// Translator use i18n to translate message by language code.
+// Currently support [en, vn].
+func Translate(translationKey string, lang *string, data map[string]any) string {
 	langKey := defaultLang
 	if lang != nil && *lang != "" {
 		langKey = *lang
@@ -50,6 +52,7 @@ func (t *Translator) Translate(translationKey string, lang *string, data map[str
 	return res
 }
 
+// Init is Translator constructor.
 func Init() *Translator {
 	translators := make(map[string]*i18n.Localizer)
 
@@ -63,10 +66,10 @@ func Init() *Translator {
 			return nil
 		}
 
-		translators[lang] = i18n.NewLocalizer(bundle, string(lang))
+		translators[lang] = i18n.NewLocalizer(bundle, lang)
 	}
 
-	singleton := &Translator{translators: translators}
+	singleton = &Translator{translators: translators}
 
 	return singleton
 }

@@ -33,9 +33,8 @@ func (d *AuthenticatorDecoder) Decode(c *gin.Context) *auth.Token {
 		httpresp.Error(
 			c,
 			http.StatusUnauthorized,
-			httpresp.ErrorInvalidAuthScheme,
-			httpresp.ErrorMessageAuthScheme,
-			map[string]string{"Scheme": "Bearer"},
+			httpresp.ErrKeyAuthenticationInvalidAuthTokenFormat.Error(),
+			nil,
 		)
 
 		return nil
@@ -48,8 +47,7 @@ func (d *AuthenticatorDecoder) Decode(c *gin.Context) *auth.Token {
 		httpresp.Error(
 			c,
 			http.StatusUnauthorized,
-			httpresp.ErrorAuthFail,
-			err.Error(),
+			httpresp.ErrKeyAuthenticationInvalidSignature.Error(),
 			nil,
 		)
 

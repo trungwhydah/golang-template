@@ -1,5 +1,7 @@
 package httpresp
 
+import "github.com/gin-gonic/gin"
+
 const (
 	DefaultLang = "en"
 )
@@ -19,4 +21,14 @@ func (header *Header) GetLanguageCode() string {
 	}
 
 	return *header.LanguageCode
+}
+
+// GetLanguageCode returns language code in header.
+func GetLanguageCode(g *gin.Context) string {
+	lang := g.GetHeader("language_code")
+	if lang == "" {
+		lang = DefaultLang
+	}
+
+	return lang
 }

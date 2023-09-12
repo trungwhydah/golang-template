@@ -15,7 +15,14 @@ var (
 	ErrorInvalidFieldType     ErrorKey = "INVALID_FIELD_TYPE"
 	ErrorInvalidAuthScheme    ErrorKey = "INVALID_AUTH_SCHEME"
 
-	ErrInternalSystem ErrorKey = "error.system.internal"
+	ErrInternalSystem                          ErrorKey = "error.system.internal"
+	ErrKeySystemInternalServer                          = errors.New("error.system.internal")
+	ErrKeyAuthenticationNoPermission                    = errors.New("error.authentication.no_permission")
+	ErrKeyAuthenticationInvalidAuthTokenFormat          = errors.New("error.authentication.invalid_auth_token_format")
+	ErrKeyAuthenticationInvalidSignature                = errors.New("error.authentication.invalid_signature")
+	ErrKeyHTTPValidatorsMissingRequiredField            = errors.New("error.http_validator.missing_required_field")
+	ErrKeyHTTPValidatorsInvalidFieldType                = errors.New("error.http_validator.invalid_filed_type")
+	ErrKeyHTTPValidatorsDecodeFail                      = errors.New("error.http_validator.decode_fail")
 )
 
 const (

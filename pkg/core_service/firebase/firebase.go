@@ -19,22 +19,19 @@ type Apps struct {
 }
 
 // NewApps returns Apps, which contains all instances firebase used in service.
-func NewApps(lc fx.Lifecycle) Apps {
+func NewApps() Apps {
 	ctx := context.Background()
 	app, err := firebase.NewApp(ctx, nil)
-
 	if err != nil {
 		logger.Fatal("Fail to init Firebase client", "error", err)
 	}
 
 	authClient, err := app.Auth(ctx)
-
 	if err != nil {
 		logger.Fatal("Fail to init Firebase Auth client", "error", err)
 	}
 
 	storageClient, err := app.Storage(ctx)
-
 	if err != nil {
 		logger.Fatal("Fail to init Storage client", "error", err)
 	}

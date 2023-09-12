@@ -1,66 +1,55 @@
 package httpresp
 
 import (
-	"bytes"
 	"net/http"
-	"text/template"
 
 	"github.com/gin-gonic/gin"
-	"github.com/golang/be/pkg/common/logger"
 	"github.com/golang/be/pkg/common/msgtranslate"
+	"github.com/golang/be/pkg/common/pagination"
+	"github.com/golang/be/pkg/common/utils"
 )
 
+// Response define struct returns for http api.
+//
+// Data specific all data http request.
+// Pagination specific pagination information when http request get list items.
+// ErrorKey specific error key if http request have error.
+// Message specific detail error if http request have error, message will be translated to language based on header of
+// http request.
 type Response struct {
-	Data       any      `json:"data,omitempty"`
-	Count      int64    `json:"count,omitempty"`
-	NextCursor string   `json:"nextCursor,omitempty"`
-	ErrorKey   ErrorKey `json:"errorKey,omitempty" example:"error.system.internal"`
-	Message    string   `json:"message,omitempty" example:"Internal System Error"`
+	Data       any                    `json:"data,omitempty"`
+	Pagination *pagination.Pagination `json:"pagination,omitempty"`
+	ErrorKey   *string                `json:"error_key,omitempty" example:"error.system.internal"`
+	Message    *string                `json:"message,omitempty" example:"Internal System Error"`
 }
 
+// Error returns error for rest api.
+//
+// status specific HTTP code err.
+// errorKey specific for message of err.
+// msgArgs specific for dynamic variable for message of err.
 func Error(
 	c *gin.Context,
 	status int,
-	errorKey ErrorKey,
-	msg string,
-	msgArgs map[string]string,
+	errorKey string,
+	msgArgs map[string]any,
 ) {
-	msgRes := bytes.Buffer{}
-	templ, err := template.New("").Parse(msg)
-
-	if err != nil {
-		logger.Errorw(
-			"can not parse error template",
-			"msg", msg,
-			"args", msgArgs,
-			"error", err,
-		)
-	} else {
-		err := templ.Execute(&msgRes, msgArgs)
-		if err != nil {
-			logger.Errorw(
-				"can not execute error template",
-				"msg", msg,
-				"args", msgArgs,
-				"error", err,
-			)
-		}
-	}
+	lang := GetLanguageCode(c)
 
 	c.AbortWithStatusJSON(
 		status,
-		Response{ErrorKey: errorKey, Message: msgRes.String()},
+		Response{
+			ErrorKey: &errorKey,
+			Message:  utils.ToPtr(msgtranslate.Translate(errorKey, &lang, msgArgs)),
+		},
 	)
 }
 
-// Success ...
-func Success(c *gin.Context, result any, cursors ...string) {
-	c.JSON(
-		http.StatusOK, Response{
-			Data:       result,
-			NextCursor: cursors[0],
-		},
-	)
+// Success returns result for rest api.
+//
+// res specific result of rest api.
+func Success(c *gin.Context, res *Response) {
+	c.JSON(http.StatusOK, res)
 }
 
 // SuccessNoContent returns success for rest api without content.
@@ -68,107 +57,66 @@ func SuccessNoContent(c *gin.Context) {
 	c.JSON(http.StatusNoContent, nil)
 }
 
-// SuccessCount ...
-func SuccessCount(c *gin.Context, result any, count int64, cursors ...string) {
-	c.JSON(
-		http.StatusOK, Response{
-			Data:       result,
-			NextCursor: cursors[0],
-			Count:      count,
-		},
-	)
-}
-
-func ExternalServerError(g *gin.Context) {
-	Error(
-		g,
-		http.StatusServiceUnavailable,
-		ErrorServiceUnavailable,
-		ErrorMessageServiceUnavailable,
-		nil,
-	)
-}
-
+// InternalServerError returns error result for rest api with internal system error.
 func InternalServerError(g *gin.Context) {
 	Error(
 		g,
 		http.StatusInternalServerError,
-		ErrorInternalServer,
-		ErrorMessageInternalServer,
+		ErrKeySystemInternalServer.Error(),
 		nil,
 	)
 }
 
-func UnauthorizedError(g *gin.Context) {
+// UnauthorizedError returns error result for rest api with authentication no permission.
+//
+// errorMsg specific reason for error don't have permission.
+func UnauthorizedError(g *gin.Context, errorMsg string) {
 	Error(
 		g,
 		http.StatusUnauthorized,
-		ErrorAuthFail,
-		ErrorMessageAuthFail,
-		nil,
+		ErrKeyAuthenticationNoPermission.Error(),
+		map[string]any{
+			"msg_err": errorMsg,
+		},
 	)
 }
 
-func NotFoundError(g *gin.Context, comp string) {
-	Error(g,
-		http.StatusBadRequest,
-		ErrorBadRequest,
-		ErrorMessageNotFound,
-		map[string]string{"Component": comp},
-	)
-}
-
+// MissingRequiredFieldError returns error result for rest api with.
+//
+// field specific field missing.
 func MissingRequiredFieldError(g *gin.Context, field string) {
 	Error(
 		g,
 		http.StatusBadRequest,
-		ErrorMissingRequiredField,
-		ErrorMessageMissingField,
-		map[string]string{"Field": field},
+		ErrKeyHTTPValidatorsMissingRequiredField.Error(),
+		map[string]any{"field": field},
 	)
 }
 
-func ForbiddenError(g *gin.Context, role string) {
-	Error(
-		g,
-		http.StatusForbidden,
-		ErrorNoPermission,
-		ErrorMessageMissPermissionClub,
-		map[string]string{"Role": role},
-	)
-}
-
+// InvalidFieldTypeError returns error result for rest api with invalid type.
+//
+// msgErr specific reason for decode fail.
 func InvalidFieldTypeError(g *gin.Context, msgErr string) {
 	Error(
 		g,
 		http.StatusBadRequest,
-		ErrorInvalidFieldType,
-		msgErr,
-		nil,
+		ErrKeyHTTPValidatorsInvalidFieldType.Error(),
+		map[string]any{
+			"msg_err": msgErr,
+		},
 	)
 }
 
-func InvalidFieldValueError(g *gin.Context, msg string) {
+// DecodeFail returns error result for rest api with authentication no permission.
+//
+// msgErr specific reason for decode fail.
+func DecodeFail(g *gin.Context, msgErr string) {
 	Error(
 		g,
 		http.StatusBadRequest,
-		ErrorInvalidFieldValue,
-		msg,
-		nil,
-	)
-}
-
-func ErrorTranslated(
-	g *gin.Context,
-	msgTranslator *msgtranslate.Translator,
-	key string,
-	lang *string,
-) {
-	Error(
-		g,
-		http.StatusBadRequest,
-		ErrorKey(key),
-		msgTranslator.Translate(key, lang, nil),
-		nil,
+		ErrKeyHTTPValidatorsDecodeFail.Error(),
+		map[string]any{
+			"msg_err": msgErr,
+		},
 	)
 }

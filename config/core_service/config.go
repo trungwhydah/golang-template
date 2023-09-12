@@ -17,25 +17,32 @@ type (
 		FirebaseStorage `yaml:"firebase_storage"`
 	}
 
-	// App -.
+	// App specific general information of service.
+	//
+	// Name of service.
+	// Env type of service, can be dev or production, if value is production swagger will be ignored.
+	// logger will be applied production mode.
 	App struct {
 		Name    string `yaml:"name" env:"APP_NAME"`
 		Env     string `yaml:"env" env:"APP_ENV"`
 		Version string `yaml:"version" env:"APP_VERSION"`
 	}
 
-	// HTTP -.
+	// HTTP specific information of http rest api.s
+	//
+	// Port default running at 8080.
 	HTTP struct {
 		Host string `yaml:"host" env:"HTTP_HOST"`
 		Port string `yaml:"port" env:"HTTP_PORT"`
 	}
 
-	// Log -.
+	// Log specific level of logger using in service.
 	Log struct {
 		Level string `yaml:"level" env:"LOG_LEVEL"`
 		Prod  bool   `yaml:"prod" env:"LOG_PROD"`
 	}
 
+	// Mongo specific mongo connection info.
 	Mongo struct {
 		DBName  string `yaml:"db_name"  env:"MONGO_DB_NAME"`
 		ConnURI string `yaml:"conn_uri" env:"MONGO_CONN_URI"`
@@ -49,6 +56,10 @@ type (
 const EnvProd = "production"
 
 // NewConfig returns app config.
+//
+// read config from config.yml if env is dev.
+// read config from config.production.yml and overwrite config.yml if env is production.
+// overwrite yml config by variables in .env file.
 func NewConfig() (*Config, error) {
 	err := godotenv.Load()
 	if err != nil {
