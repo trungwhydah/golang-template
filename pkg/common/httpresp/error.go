@@ -12,6 +12,7 @@ var (
 	ErrKeyHTTPValidatorsMissingRequiredField   = errors.New("error.http_validator.missing_required_field")
 	ErrKeyHTTPValidatorsInvalidFieldType       = errors.New("error.http_validator.invalid_filed_type")
 	ErrKeyHTTPValidatorsDecodeFail             = errors.New("error.http_validator.decode_fail")
+	ErrKeyDatabaseNotFound                     = errors.New("error.database.not_found")
 )
 
 func NewError(key string) error {

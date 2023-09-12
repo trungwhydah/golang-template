@@ -15,7 +15,7 @@ type Entity struct {
 	ID        ID        `json:"id" bson:"_id"`
 	CreatedAt CreatedAt `json:"-" bson:"created_at"`
 	UpdatedAt CreatedAt `json:"-" bson:"updated_at"`
-	IsDeleted bool      `json:"-" bson:"is_deleted"`
+	Status    string    `json:"status" bson:"status"`
 }
 
 // ID is a custom type that helps to Marshal id value from Database.
@@ -204,4 +204,10 @@ func (t *UnixTimestamp) SetBSON(raw bson.RawValue) error {
 	*t = UnixTimestamp(ti)
 
 	return nil
+}
+
+type Media struct {
+	URL          string `bson:"url" json:"url"`
+	Type         string `bson:"type" json:"type"`
+	ThumbnailURL string `bson:"thumbnail_url" json:"thumbnail_url"`
 }

@@ -83,7 +83,8 @@ func NewRouter(params RouteParams, config *config.Config) Router {
 	adminGroup := publicGroup.Group("/admin").Use(params.AdminAuth.Authenticate)
 
 	// user group
-	userGroup := publicGroup.Group("/user").Use(params.UserAuth.Authenticate)
+	// userGroup := publicGroup.Group("/user").Use(params.UserAuth.Authenticate)
+	userGroup := publicGroup.Group("/user")
 
 	return Router{
 		PublicGroup: publicGroup,

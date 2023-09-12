@@ -120,3 +120,12 @@ func DecodeFail(g *gin.Context, msgErr string) {
 		},
 	)
 }
+
+func NotFound(g *gin.Context) {
+	Error(
+		g,
+		http.StatusNotFound,
+		ErrKeyDatabaseNotFound.Error(),
+		nil,
+	)
+}

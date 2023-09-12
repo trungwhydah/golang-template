@@ -12,3 +12,4 @@ error:
     decode_fail: Decode thông tin request lỗi. Vui lòng kiểm tra lại lỗi {{.msg_err}}
   database:
     missing_update_data: Số lượng document được update không đủ so với yêu cầu.
+    not_found: Item not found
