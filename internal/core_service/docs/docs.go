@@ -23,7 +23,110 @@ const docTemplate = `{
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
-    "paths": {},
+    "paths": {
+        "/user/products/{productId}": {
+            "get": {
+                "description": "Get product by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "product"
+                ],
+                "summary": "Get product by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Product ID",
+                        "name": "productId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_golang_be_pkg_common_httpresp.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_golang_be_pkg_common_httpresp.Response"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "github_com_golang_be_pkg_common_httpresp.Response": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "error_key": {
+                    "type": "string",
+                    "example": "error.system.internal"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Internal System Error"
+                },
+                "pagination": {
+                    "$ref": "#/definitions/github_com_golang_be_pkg_common_pagination.Pagination"
+                }
+            }
+        },
+        "github_com_golang_be_pkg_common_pagination.Pagination": {
+            "type": "object",
+            "properties": {
+                "cursor": {
+                    "type": "string"
+                },
+                "limit": {
+                    "type": "integer",
+                    "default": 50
+                },
+                "next_cursor": {
+                    "type": "string"
+                },
+                "order_by": {
+                    "type": "string"
+                },
+                "order_direction": {
+                    "type": "string",
+                    "default": "desc",
+                    "enum": [
+                        "asc",
+                        "desc"
+                    ]
+                },
+                "page": {
+                    "type": "integer",
+                    "default": 1
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        }
+    },
     "securityDefinitions": {
         "ApiKeyAuth": {
             "description": "JWT Token",

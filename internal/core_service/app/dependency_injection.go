@@ -5,9 +5,9 @@ import (
 	config "github.com/golang/be/config/core_service"
 	cmdomain "github.com/golang/be/internal/common/domain"
 	cmrepo "github.com/golang/be/internal/common/repo"
-	"github.com/golang/be/internal/core_service/api/restful"
-	"github.com/golang/be/internal/core_service/api/restful/security"
-	v1 "github.com/golang/be/internal/core_service/api/restful/v1"
+	"github.com/golang/be/internal/core_service/api"
+	"github.com/golang/be/internal/core_service/api/handler"
+	"github.com/golang/be/internal/core_service/api/middleware"
 	"github.com/golang/be/internal/core_service/domain"
 	"github.com/golang/be/internal/core_service/repo"
 	"github.com/golang/be/pkg/common/logger"
@@ -29,13 +29,13 @@ var InternalOptions = fx.Options(
 	fx.Provide(NewServer),
 
 	// Router
-	fx.Provide(v1.NewRouter),
+	fx.Provide(api.NewRouter),
 
 	// Controller
-	restful.Module,
+	handler.Module,
 
-	// Security
-	security.Module,
+	// Middleware
+	middleware.Module,
 
 	// Use Case
 	domain.Module,

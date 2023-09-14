@@ -15,6 +15,6 @@ COPY . .
 
 RUN go get github.com/githubnemo/CompileDaemon
 RUN go install github.com/githubnemo/CompileDaemon
-RUN swag init -g internal/core_service/api/restful/v1/router.go -o internal/core_service/docs
+RUN swag init -g internal/core_service/api/router.go -o internal/core_service/docs
 
 ENTRYPOINT CompileDaemon -build="go build -o /build/app ./cmd/core_service" -command="/build/app"

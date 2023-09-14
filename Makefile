@@ -25,7 +25,7 @@ compose-down: ## Down docker-compose
 .PHONY: compose-down
 
 swag: ## swag init
-	swag init --parseDependency -g internal/core_service/api/restful/v1/router.go -o internal/core_service/docs
+	swag init --parseDependency -g internal/core_service/api/router.go -o internal/core_service/docs
 .PHONY: swag
 
 build: ## build binary file

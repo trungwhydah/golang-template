@@ -1,13 +1,13 @@
 // Package v1 implements routing paths. Each services in own file.
-package v1
+package api
 
 import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	config "github.com/golang/be/config/core_service"
-	"github.com/golang/be/internal/core_service/api/restful/security"
-	"github.com/golang/be/internal/core_service/api/restful/security/authen"
+	"github.com/golang/be/internal/core_service/api/middleware"
+	"github.com/golang/be/internal/core_service/api/middleware/authen"
 	"github.com/golang/be/internal/core_service/docs"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -74,7 +74,7 @@ func NewRouter(params RouteParams, config *config.Config) Router {
 	engine.GET("/healthz", func(c *gin.Context) { c.Status(http.StatusOK) })
 
 	// configs cors
-	engine.Use(security.CorsConfigs())
+	engine.Use(middleware.CorsConfigs())
 
 	// public group
 	publicGroup := engine.Group("/api/v1")

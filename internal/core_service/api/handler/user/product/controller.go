@@ -23,6 +23,16 @@ func (c *Controller) RegisterRoutes(route gin.IRoutes) {
 	route.GET("/products/:productId", c.GetProduct)
 }
 
+// GetProduct 	Get product by id
+// @Summary 	Get product by id
+// @Description Get product by id
+// @Tags        product
+// @Accept      json
+// @Produce     json
+// @Param       productId  path    string true  "Product ID"
+// @Success     200  {object} httpresp.Response{data=string}
+// @Failure     500  {object} httpresp.Response
+// @Router      /user/products/{productId} [get].
 func (c *Controller) GetProduct(g *gin.Context) {
 	productID := g.Param("productId")
 	if productID == "" {
