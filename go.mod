@@ -19,7 +19,7 @@ require (
 	github.com/swaggo/swag v1.16.2
 	go.mongodb.org/mongo-driver v1.12.1
 	go.uber.org/fx v1.20.0
-	go.uber.org/zap v1.25.0
+	go.uber.org/zap v1.26.0
 	golang.org/x/text v0.13.0
 )
 
